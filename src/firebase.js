@@ -2,9 +2,9 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
-
+import { getStorage } from 'firebase/storage';
 // ⚠️ PASTE YOUR FIREBASE CONFIG HERE (from Step 1)
-export const firebaseConfig =  {
+export const firebaseConfig = {
   apiKey: "AIzaSyBXmOKHmsFbS5g4UDPsAZxr5udY9gN-mpA",
   authDomain: "smartshop-e3712.firebaseapp.com",
   projectId: "smartshop-e3712",
@@ -14,7 +14,10 @@ export const firebaseConfig =  {
   measurementId: "G-4WB8R29SVH"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+export const storage = getStorage(app);
 export default app;

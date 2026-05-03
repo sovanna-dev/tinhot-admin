@@ -1,15 +1,22 @@
 // src/App.jsx
-import React from 'react';
-import { Admin, Resource, ListGuesser } from 'react-admin';
+import { Admin, Resource } from 'react-admin';
 import { FirebaseAuthProvider, FirebaseDataProvider } from 'react-admin-firebase';
 import { ThemeProvider } from '@mui/material/styles';
-import {firebaseConfig} from './firebase';
+import { firebaseConfig } from './firebase';
 import { tinhotTheme } from './theme';
 import Dashboard from './Dashboard';
 import MyLayout from './MyLayout';
 
+// Import all CRUD components
+import { ProductList, ProductEdit, ProductCreate } from './components/ProductComponents';
+import { OrderList, OrderEdit } from './components/OrderComponents';
+import { UserList, UserEdit } from './components/UserComponents';
+import { CategoryList, CategoryEdit, CategoryCreate } from './components/CategoryComponents';
+import { BannerList, BannerEdit, BannerCreate } from './components/BannerComponents';  // Add this
+
 const dataProvider = FirebaseDataProvider(firebaseConfig, {
   logging: true,
+  watch: ['products', 'orders', 'users', 'categories', 'promotion_banners'],  // Add promotion_banners
 });
 
 const authProvider = FirebaseAuthProvider(firebaseConfig);
@@ -25,25 +32,47 @@ function App() {
         dashboard={Dashboard}
         layout={MyLayout}
       >
+        {/* Products */}
         <Resource 
           name="products" 
-          list={ListGuesser} 
-          options={{ label: '📦 Products' }} 
+          list={ProductList}
+          edit={ProductEdit}
+          create={ProductCreate}
+          options={{ label: '📦 Products' }}
         />
+        
+        {/* Orders */}
         <Resource 
           name="orders" 
-          list={ListGuesser} 
-          options={{ label: '🛒 Orders' }} 
+          list={OrderList}
+          edit={OrderEdit}
+          options={{ label: '🛒 Orders' }}
         />
+        
+        {/* Users */}
         <Resource 
           name="users" 
-          list={ListGuesser} 
-          options={{ label: '👥 Users' }} 
+          list={UserList}
+          edit={UserEdit}
+          options={{ label: '👥 Users' }}
         />
+        
+        {/* Categories */}
         <Resource 
           name="categories" 
-          list={ListGuesser} 
-          options={{ label: '🏷️ Categories' }} 
+          list={CategoryList}
+          edit={CategoryEdit}
+          create={CategoryCreate}
+          options={{ label: '🏷️ Categories' }}
+        />
+        
+        {/* Banners - NEW */}
+        <Resource 
+          name="promotion_banners" 
+          list={BannerList}
+          edit={BannerEdit}
+          create={BannerCreate}
+          options={{ label: '🎨 Banners' }}
         />
       </Admin>
     </ThemeProvider>
